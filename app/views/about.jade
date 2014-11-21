@@ -37,9 +37,9 @@ html(lang='en')
           //a.navbar-brand(href='#') Bootstrap theme
         .navbar-collapse.collapse
           ul.nav.navbar-nav
-            li.active
-              a(href='#') Home
             li
+              a(href='#') Home
+            li.active
               a(href='about') About
             li
               a(href='contact') Contact
@@ -51,33 +51,14 @@ html(lang='en')
         h1 Jefs Book statistics
         
       h2
-        |Latest books :
-      div(class='container',style='font: 12px sans-serif;')
-        div(class='row')
-            div(class='span12')
-                table(class='table table-hover',id='dc-table-graph')
-                    thead
-                        tr(class='header')
-                            th
-                                |Author
-                            th 
-                                |Title
-                            th
-                                |Genre
-                            th
-                                |Pages
-                            th
-                                |Read
-                            th
-                                |LibraryThing
-              
-    // /container
-    
-    // Bootstrap core JavaScript
-    // ==================================================
-    // Placed at the end of the document so the pages load faster
-    
-    script(src='#{pathToAssets}/docs/assets/js/_vendor/holder.js')
-    //|<script>sayHello('World');</script>
-    // my stats page charts
-    script(src='clientjs/stats.js')
+        |History
+      p
+        |I keep track of my reading since the year 1996. As a software developer, I often wanted to try out a new technology, and my little book DB came in handy.
+      p
+        |So over the years, my books have been presented in C++,Python, Java (SE and EE), stored in SQLServer, MySQL, PostgreSQL, eXist...
+      p
+        |... until LibraryThing came along. So I switched over to LibraryThing, but over the time, I started missing my statistics (number of pages per year, predictions, per gener, per author, ...)
+      h2
+        |Current version
+      p
+        |And now again a nice new technology came along : node.js and D3S... So here it is again. And now available as showcase in the hope that the LibraryThing people start adding this feature into their site (or allow me to access all required data directly via my server).

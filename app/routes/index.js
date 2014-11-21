@@ -10,15 +10,20 @@
  */
 
 var stats = require ('./stats.js');
+var data = require('./data.js');
 'use strict';
 
 module.exports = function (app) {
     app.get('/', stats.mainPage);
     app.get('/about', function (req, res) {
-        res.redirect('http://www.alt-f1.be');
+        res.render('about', {
+            'pathToAssets': '/bootstrap-3.2.0',                        
+        });
     });
     app.get('/contact', function (req, res) {
-        res.redirect('http://www.alt-f1.be/contact-us.html');
+        res.render('contact', {
+            'pathToAssets': '/bootstrap-3.2.0',                        
+        });
     });
     app.get('/template/:selectedTemplate', function (req, res) {
         res.render('bootstrap3-templates/' + req.params.selectedTemplate, {
@@ -26,4 +31,8 @@ module.exports = function (app) {
             'pathToSelectedTemplateWithinBootstrap' : '/bootstrap-3.2.0/docs/examples/' + req.params.selectedTemplate
         });
     });
+    app.get('/data/:resource', function (req, res) {
+        data.load(req,res,req.params.resource);
+    });
+    
 };

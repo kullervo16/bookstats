@@ -4,11 +4,14 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/home/jef/NetBeansProjects/bootstrap3-jade-node-express-grunt/BookStats/app/views/bootstrap3-templates/theme.jade</file>
+            <file>file:/home/jef/NetBeansProjects/bootstrap3-jade-node-express-grunt/BookStats/app/routes/data.js</file>
             <file>file:/home/jef/NetBeansProjects/bootstrap3-jade-node-express-grunt/BookStats/app/views/index.jade</file>
             <file>file:/home/jef/NetBeansProjects/bootstrap3-jade-node-express-grunt/BookStats/app/app.js</file>
             <file>file:/home/jef/NetBeansProjects/bootstrap3-jade-node-express-grunt/BookStats/app/routes/stats.js</file>
             <file>file:/home/jef/NetBeansProjects/bootstrap3-jade-node-express-grunt/BookStats/app/routes/index.js</file>
             <file>file:/home/jef/NetBeansProjects/bootstrap3-jade-node-express-grunt/BookStats/app/dao/statsDao.js</file>
+            <file>file:/home/jef/NetBeansProjects/bootstrap3-jade-node-express-grunt/BookStats/app/public/clientjs/stats.js</file>
+            <file>file:/home/jef/NetBeansProjects/bootstrap3-jade-node-express-grunt/BookStats/app/public/test/test.html</file>
             <file>file:/home/jef/NetBeansProjects/bootstrap3-jade-node-express-grunt/BookStats/app/views/bootstrap3-templates/blog.jade</file>
         </group>
     </open-files>

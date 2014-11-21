@@ -37,11 +37,11 @@ html(lang='en')
           //a.navbar-brand(href='#') Bootstrap theme
         .navbar-collapse.collapse
           ul.nav.navbar-nav
-            li.active
-              a(href='#') Home
+            li
+              a(href='/') Home
             li
               a(href='about') About
-            li
+            li.active
               a(href='contact') Contact
             
         // /.nav-collapse
@@ -51,33 +51,9 @@ html(lang='en')
         h1 Jefs Book statistics
         
       h2
-        |Latest books :
-      div(class='container',style='font: 12px sans-serif;')
-        div(class='row')
-            div(class='span12')
-                table(class='table table-hover',id='dc-table-graph')
-                    thead
-                        tr(class='header')
-                            th
-                                |Author
-                            th 
-                                |Title
-                            th
-                                |Genre
-                            th
-                                |Pages
-                            th
-                                |Read
-                            th
-                                |LibraryThing
-              
-    // /container
-    
-    // Bootstrap core JavaScript
-    // ==================================================
-    // Placed at the end of the document so the pages load faster
-    
-    script(src='#{pathToAssets}/docs/assets/js/_vendor/holder.js')
-    //|<script>sayHello('World');</script>
-    // my stats page charts
-    script(src='clientjs/stats.js')
+        |Get in touch
+      p
+        |You can find me in  
+        a(href='https://www.librarything.com/profile/kullervo16')
+            |LibraryThing
+        |... feel free to send me a message to comment on this.
