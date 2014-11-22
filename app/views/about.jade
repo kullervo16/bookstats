@@ -1,28 +1,6 @@
 doctype html
 html(lang='en')
-  head
-    meta(charset='utf-8')
-    meta(http-equiv='X-UA-Compatible', content='IE=edge')
-    meta(name='viewport', content='width=device-width, initial-scale=1')
-    meta(name='description', content='')
-    meta(name='author', content='')
-    link(rel='icon', href='#{pathToAssets}/docs/favicon.ico')
-    title Theme Template for Bootstrap    
-
-    // D3 and DC.JS
-    script(src='clientjs/d3.v3.min.js')
-    script(src='clientjs/crossfilter.v1.min.js')
-    script(src='clientjs/dc.js')    
-    link(href='css/dc.css', rel='stylesheet')
-    script(src='clientjs/jquery.min.js')
-    script(src='#{pathToAssets}/dist/js/bootstrap.min.js')
-    
-
-    // Bootstrap core CSS
-    link(href='#{pathToAssets}/dist/css/bootstrap.min.css', rel='stylesheet')
-    // Bootstrap theme
-    link(href='#{pathToAssets}/dist/css/bootstrap-theme.min.css', rel='stylesheet')
-    
+  include ./head.jade      
       
   body(role='document')
     // Fixed navbar
