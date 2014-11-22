@@ -4,26 +4,35 @@
 
 // Create the dc.js chart objects & link to div
 var dataTable = dc.dataTable("#dc-table-graph");
+var pageChart = dc.barChart("#dc-page-chart");
+
+
 // load data from a csv file
-d3.json("http://localhost:3001/data/books.json", function (data) {
-// format our data
-var dtgFormat = d3.time.format("%Y-%m-%dT%H:%M:%S");
+d3.json("/data/books.json", function (data) {
+// Run the data through crossfilter and load our 'facts'
 data.forEach(function(d) {
     
-        d.read = dtgFormat.parse(d.read.substr(0, 19));
+        d.read = d.read.substr(0, 10);
         d.title = d.title;
         d.author = d.author;
         d.pages = +d.pages;
+        d.pageCat = +d.pages - d.pages % 100
     });
-// Run the data through crossfilter and load our 'facts'
 var facts = crossfilter(data);
 // Create dataTable dimension
 var timeDimension = facts.dimension(function (d) {
-return d.dtg;
+return d.read;
 });
+
+var pageValue = facts.dimension(function (d) {    
+    return d.pageCat;
+});
+var pageValueGroupCount = pageValue.group()
+.reduceCount(function(d) { return d.pageCat; })
+
+
 // Setup the charts
 // Table of book data
-console.log(dataTable);
 dataTable.width(960).height(800)
     .dimension(timeDimension)
     .group(function(d) { return "Books"})
@@ -33,14 +42,33 @@ dataTable.width(960).height(800)
     function(d) { return d.title; },
     function(d) { return d.genre; },
     function(d) { return d.pages; },
-    function(d) { return d.read; },
+    function(d) { return d.read },
     function(d) {
     return '<a href=\"' +d.link+ "\" target=\"_blank\">link</a>"}
     ])
-    .sortBy(function(d){ return d.read; })
-    .order(d3.ascending);
+    //.sortBy(function(d){ console.log("SORT "+d.read);return d.read; })
+    //.sortBy(function(d){ return d.pages; })
+    //.order(d3.descending);   // doesn't seem to work... so sort via DB
+    ;
+
+
+    
+    //barchart with sizes
+    pageChart.width(480)
+    .height(150)
+    .margins({top: 10, right: 10, bottom: 20, left: 40})
+    .dimension(pageValue)
+    .group(pageValueGroupCount)
+    .transitionDuration(500)
+    .centerBar(true)
+    //.gap(5)
+    //.filter([3, 5])
+    .x(d3.scale.linear().domain([0, 2000]))    
+    .elasticY(true)
+    .xUnitCount(function() {return 5;})    
+    ;
     
     // Render the Charts
-    dc.renderAll();
-    console.log(dataTable);
+    dc.renderAll();    
+
 });

@@ -5,6 +5,7 @@
         <data xmlns="http://www.netbeans.org/ns/j2se-project/3">
             <name>BookStats</name>
             <source-roots>
+                <root id="src.clientjs.dir"/>
                 <root id="src.dao.dir"/>
                 <root id="src.config.dir"/>
                 <root id="src.routes.dir"/>
