@@ -24,7 +24,18 @@ walker.on('end', function() {
     console.log(files);
     files.forEach(function (file) {
         console.log(file);
-        fs.readFile(file, 'utf8', function (err,data) {
+        handleFile(file);
+    });
+});
+
+//handleFile("import/data13.lt");
+
+//dao.storeBook("boe","Franzen,Jonathan","2012-01-01",150);
+//dao.storeBook("baa","Franzen,Jonathan","2014-01-01",50);
+
+
+function handleFile(file) {
+    fs.readFile(file, 'utf8', function (err,data) {
           if (err) {
             return console.log("ERR:"+err);
           }
@@ -58,9 +69,4 @@ walker.on('end', function() {
               lineNo++;
           })
         });
-    });
-});
-
-//dao.storeBook("boe","Franzen,Jonathan","2012-01-01",150);
-//dao.storeBook("baa","Franzen,Jonathan","2014-01-01",50);
-
+}

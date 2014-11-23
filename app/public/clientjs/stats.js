@@ -6,6 +6,10 @@
 var dataTable = dc.dataTable("#dc-table-graph");
 var pageChart = dc.barChart("#dc-page-chart");
 var pagesPerYearChart = dc.rowChart("#dc-pages-chart");
+var booksPerYearChart = dc.rowChart("#dc-books-chart");
+var genreChart = dc.pieChart("#dc-genre-chart");
+var languageChart = dc.pieChart("#dc-language-chart");
+var ratingChart = dc.pieChart("#dc-rating-chart");
 
 
 // load data from a csv file
@@ -13,32 +17,61 @@ d3.json("/data/books.json", function (data) {
 // Run the data through crossfilter and load our 'facts'
 data.forEach(function(d) {
     
-        d.read = d.read.substr(0, 10);
+        if(d.read !== null) {
+            d.read = d.read.substr(0, 10);
+        }
         d.title = d.title;
         d.author = d.author;
         d.pages = +d.pages;
         d.pageCat = +d.pages - d.pages % 100
     });
 var facts = crossfilter(data);
-// Create dataTable dimension
+// Create dataTable dimensions
 var timeDimension = facts.dimension(function (d) {
 return d.read;
 });
 
-var pageValue = facts.dimension(function (d) {    
+var pageDimension = facts.dimension(function (d) {    
     return d.pageCat;
 });
-var pageValueGroupCount = pageValue.group()
-.reduceCount(function(d) { return d.pageCat; });
 
-var yearValue = facts.dimension(function (d) {
+var genreDimension = facts.dimension(function (d) {
+    return d.genre;
+});
+var yearDimension = facts.dimension(function (d) {
+    if(d.read === null) {
+        return null;
+    }
    return +d.read.substring(0,4);
 });
-
-var yearValueGroupSum = yearValue.group().reduceSum(function(d) {
-    return +d.pages;
+var languageDimension = facts.dimension(function (d) {    
+    return d.language;
+});
+var ratingDimension = facts.dimension(function (d) {    
+    return d.rating;
 });
 
+
+// create group functions
+var pageValueGroupCount = pageDimension.group()
+.reduceCount(function(d) { return d.pageCat; });
+
+
+var yearValueGroupPageSum = yearDimension.group().reduceSum(function(d) {
+    return +d.pages;
+});
+var yearValueGroupBookSum = yearDimension.group().reduceSum(function(d) {
+    return 1;
+});
+var genreGroupBookSum = genreDimension.group().reduceSum(function (d) {
+    return 1;
+});
+var languageGroupBookSum = languageDimension.group().reduceSum(function (d) {
+    return 1;
+});
+var ratingGroupBookSum = ratingDimension.group().reduceSum(function (d) {
+    return 1;
+});
 
 // Setup the charts
 // Table of book data
@@ -52,6 +85,8 @@ dataTable.width(960).height(800)
     function(d) { return d.genre; },
     function(d) { return d.pages; },
     function(d) { return d.read },
+    function(d) { return d.rating },
+    function(d) { return d.language },
     function(d) {
     return '<a href=\"' +d.link+ "\" target=\"_blank\">link</a>"}
     ])
@@ -66,7 +101,7 @@ dataTable.width(960).height(800)
     pageChart.width(480)
     .height(150)
     .margins({top: 10, right: 10, bottom: 20, left: 40})
-    .dimension(pageValue)
+    .dimension(pageDimension)
     .group(pageValueGroupCount)
     .transitionDuration(500)
     .centerBar(true)
@@ -77,19 +112,51 @@ dataTable.width(960).height(800)
     .xUnitCount(function() {return 5;})    
     ;
     
-    // rowchart for pages per year
-    pagesPerYearChart.width(300)
-    .height(220)
+    // rowchart for books per year
+    booksPerYearChart.width(300)
+    .height(420)
     .margins({top: 5, left: 10, right: 10, bottom: 20})
-    .dimension(yearValue)
-    .group(yearValueGroupSum)
-    .colors(d3.scale.category10())
-//    .label(function (d){
-//    return d.key.split(".")[1];
-//    })
+    .dimension(yearDimension)
+    .group(yearValueGroupBookSum)
+    .colors(d3.scale.category20())
     .title(function(d){return d.value;})
     .elasticX(true)
     .xAxis().ticks(4);
+    
+    // rowchart for pages per year
+    pagesPerYearChart.width(300)
+    .height(420)
+    .margins({top: 5, left: 10, right: 10, bottom: 20})
+    .dimension(yearDimension)
+    .group(yearValueGroupPageSum)
+    .colors(d3.scale.category20())
+    .title(function(d){return d.value;})
+    .elasticX(true)
+    .xAxis().ticks(4);
+    
+    // pie chart per genre
+    genreChart.width(180)
+        .height(180)
+        .radius(80)
+        .innerRadius(30)
+        .dimension(genreDimension)
+        .group(genreGroupBookSum);
+
+    // pie chart per language
+    languageChart.width(180)
+        .height(180)
+        .radius(80)
+        .innerRadius(30)
+        .dimension(languageDimension)
+        .group(languageGroupBookSum);
+
+    // pie chart per rating
+    ratingChart.width(180)
+        .height(180)
+        .radius(80)
+        .innerRadius(30)
+        .dimension(ratingDimension)
+        .group(ratingGroupBookSum);
 
     // Render the Charts
     dc.renderAll();    

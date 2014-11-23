@@ -5,7 +5,7 @@
  */
 
 var bookId = 0;
-var authorId = 51;
+var authorId = 710;
 var client;
 var connected = false;
 
@@ -33,7 +33,7 @@ function connect() {
 function listRecentBooks(max, res, callBack) {
     connect();
     
-    var query = client.query("select b.title, b.genre, b.pages, b.read, b.link, a.name as author from book b, author a where b.author = a.id order by b.read desc");
+    var query = client.query("select b.title, b.genre, b.pages, b.read, b.link, a.name as author, b.language, b.rating from book b, author a where b.author = a.id and b.read is not null order by b.read desc");
     
     query.on("row", function (row, result) {
         result.addRow(row);
@@ -51,14 +51,14 @@ function storeBook(title, author, read, pages, rating, language) {
     console.log("Store t="+title+"|a="+author+"|re="+read+"|p="+pages+"|ra="+rating+"|l="+language);
     connect();
     var authorFound = false;
-    var name = author.split(",")[0].trim();
+    var name = author.split(",")[0].trim().replace("'","");
     var firstName = author.split(",")[1];
     if(firstName !== undefined ) {
         firstName = firstName.trim();
     }
     if(pages === undefined || pages === '') {
         pages = '0';
-    }
+    }    
     
     var query = client.query("select id from author where name = '"+name+"' and firstName = '"+firstName+"'");
     
@@ -82,12 +82,15 @@ function storeBook(title, author, read, pages, rating, language) {
 
 function addBookForExistingAuthor(title, authorId, read, pages, rating, language) {
     console.log("!!!Add book "+bookId+" t="+title+" a="+authorId+" r="+read+" p="+pages);
-    
-    var query = client.query("insert into book values ("+bookId+",'"+title+"','unknown',"+pages+",'"+read+"',null,"+authorId+",'"+rating+"','"+language+"')");
-    bookId = bookId+1;
-    query.on("end", function () {          
-        console.log("Inserted");                  
-    });    
+    var date = "'"+read+"'";
+    if(read === undefined || read === ' ') {
+        date = "null";
+    }
+    console.log('##'+date);
+    var query = "insert into book values ("+bookId+",'"+title+"','unknown',"+pages+","+date+",null,"+authorId+",'"+language+"','"+rating+"')";
+    console.log(query);
+    client.query(query);
+    bookId = bookId+1;    
 }
 
 exports.listRecentBooks = listRecentBooks;
