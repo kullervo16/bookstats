@@ -3,7 +3,9 @@
  */
 
 // Create the dc.js chart objects & link to div
-var dataTable = dc.dataTable("#dc-table-graph");
+//var dataTable = dc.dataTable("#dc-table-graph");
+
+            
 var pageChart = dc.barChart("#dc-page-chart");
 var pagesPerYearChart = dc.rowChart("#dc-pages-chart");
 var booksPerYearChart = dc.rowChart("#dc-books-chart");
@@ -52,6 +54,24 @@ var ratingDimension = facts.dimension(function (d) {
 });
 
 
+// create refresh function for the dynatable
+var dynatable = $('#dc-table-graph').dynatable({
+    features: {
+        pushState: false
+    },
+    dataset: {
+        records: timeDimension.top(Infinity),
+        perPageDefault: 10,
+        perPageOptions: [10, 20, 50]
+    }
+}).data('dynatable');
+function RefreshTable() {
+    dc.events.trigger(function () {
+        dynatable.settings.dataset.originalRecords = timeDimension.top(Infinity);
+        dynatable.process();
+    });
+};
+
 // create group functions
 var pageValueGroupCount = pageDimension.group()
 .reduceCount(function(d) { return d.pageCat; });
@@ -75,25 +95,25 @@ var ratingGroupBookSum = ratingDimension.group().reduceSum(function (d) {
 
 // Setup the charts
 // Table of book data
-dataTable.width(960).height(800)
-    .dimension(timeDimension)
-    .group(function(d) { return "Books"})
-    .size(10)
-    .columns([
-    function(d) { return d.author; },
-    function(d) { return d.title; },
-    function(d) { return d.genre; },
-    function(d) { return d.pages; },
-    function(d) { return d.read },
-    function(d) { return d.rating },
-    function(d) { return d.language },
-    function(d) {
-    return '<a href=\"' +d.link+ "\" target=\"_blank\">link</a>"}
-    ])
-    //.sortBy(function(d){ console.log("SORT "+d.read);return d.read; })
-    //.sortBy(function(d){ return d.pages; })
-    //.order(d3.descending);   // doesn't seem to work... so sort via DB
-    ;
+//dataTable.width(960).height(800)
+//    .dimension(timeDimension)
+//    .group(function(d) { return "Books"})
+//    .size(10)
+//    .columns([
+//    function(d) { return d.author; },
+//    function(d) { return d.title; },
+//    function(d) { return d.genre; },
+//    function(d) { return d.pages; },
+//    function(d) { return d.read },
+//    function(d) { return d.rating },
+//    function(d) { return d.language },
+//    function(d) {
+//    return '<a href=\"' +d.link+ "\" target=\"_blank\">link</a>"}
+//    ])
+//    //.sortBy(function(d){ console.log("SORT "+d.read);return d.read; })
+//    //.sortBy(function(d){ return d.pages; })
+//    //.order(d3.descending);   // doesn't seem to work... so sort via DB
+//    ;
 
 
     
@@ -160,6 +180,14 @@ dataTable.width(960).height(800)
         .innerRadius(30)
         .dimension(ratingDimension)
         .group(ratingGroupBookSum);
+
+    // link in the dynatable
+    for (var i = 0; i < dc.chartRegistry.list().length; i++) {
+        var chartI = dc.chartRegistry.list()[i];
+        chartI.on("filtered", RefreshTable);
+    }
+    
+    RefreshTable();
 
     // Render the Charts
     dc.renderAll();    
