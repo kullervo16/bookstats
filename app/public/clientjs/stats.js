@@ -5,6 +5,7 @@
 // Create the dc.js chart objects & link to div
 var dataTable = dc.dataTable("#dc-table-graph");
 var pageChart = dc.barChart("#dc-page-chart");
+var pagesPerYearChart = dc.rowChart("#dc-pages-chart");
 
 
 // load data from a csv file
@@ -28,7 +29,15 @@ var pageValue = facts.dimension(function (d) {
     return d.pageCat;
 });
 var pageValueGroupCount = pageValue.group()
-.reduceCount(function(d) { return d.pageCat; })
+.reduceCount(function(d) { return d.pageCat; });
+
+var yearValue = facts.dimension(function (d) {
+   return +d.read.substring(0,4);
+});
+
+var yearValueGroupSum = yearValue.group().reduceSum(function(d) {
+    return +d.pages;
+});
 
 
 // Setup the charts
@@ -53,7 +62,7 @@ dataTable.width(960).height(800)
 
 
     
-    //barchart with sizes
+    //barchart for pages per book
     pageChart.width(480)
     .height(150)
     .margins({top: 10, right: 10, bottom: 20, left: 40})
@@ -68,6 +77,20 @@ dataTable.width(960).height(800)
     .xUnitCount(function() {return 5;})    
     ;
     
+    // rowchart for pages per year
+    pagesPerYearChart.width(300)
+    .height(220)
+    .margins({top: 5, left: 10, right: 10, bottom: 20})
+    .dimension(yearValue)
+    .group(yearValueGroupSum)
+    .colors(d3.scale.category10())
+//    .label(function (d){
+//    return d.key.split(".")[1];
+//    })
+    .title(function(d){return d.value;})
+    .elasticX(true)
+    .xAxis().ticks(4);
+
     // Render the Charts
     dc.renderAll();    
 
