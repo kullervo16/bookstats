@@ -9,7 +9,7 @@ var walk    = require('walk');
 var files   = [];
 
 // Walker options
-var walker  = walk.walk('./import', { followLinks: false });
+var walker  = walk.walk('../import', { followLinks: false });
 
 walker.on('file', function(root, stat, next) {
     console.log(root+" "+stat.name);

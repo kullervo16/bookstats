@@ -5,7 +5,7 @@
  */
 
 var bookId = 0;
-var authorId = 710;
+var authorId = 468;
 var client;
 var connected = false;
 
@@ -85,10 +85,8 @@ function addBookForExistingAuthor(title, authorId, read, pages, rating, language
     var date = "'"+read+"'";
     if(read === undefined || read === ' ') {
         date = "null";
-    }
-    console.log('##'+date);
-    var query = "insert into book values ("+bookId+",'"+title+"','unknown',"+pages+","+date+",null,"+authorId+",'"+language+"','"+rating+"')";
-    console.log(query);
+    }    
+    var query = "insert into book values ("+bookId+",'"+title+"','unknown',"+pages+","+date+",null,"+authorId+",'"+language+"','"+rating+"')";    
     client.query(query);
     bookId = bookId+1;    
 }

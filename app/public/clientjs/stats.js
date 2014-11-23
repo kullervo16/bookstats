@@ -103,14 +103,16 @@ dataTable.width(960).height(800)
     .margins({top: 10, right: 10, bottom: 20, left: 40})
     .dimension(pageDimension)
     .group(pageValueGroupCount)
-    .transitionDuration(500)
+    .transitionDuration(500)    
     .centerBar(true)
-    //.gap(5)
+    .gap(2)      
     //.filter([3, 5])
-    .x(d3.scale.linear().domain([0, 2000]))    
-    .elasticY(true)
-    .xUnitCount(function() {return 5;})    
+    .x(d3.scale.linear().domain([0, 2000]))        
+    .elasticY(true)              
+    //.xUnits(function () {console.log("XUNITS"); return dc.units.integers;});
     ;
+    
+    pageChart.xUnitCount = function() {return +20;};
     
     // rowchart for books per year
     booksPerYearChart.width(300)
@@ -119,9 +121,10 @@ dataTable.width(960).height(800)
     .dimension(yearDimension)
     .group(yearValueGroupBookSum)
     .colors(d3.scale.category20())
-    .title(function(d){return d.value;})
+    .title(function(d){return d.value;})    
     .elasticX(true)
     .xAxis().ticks(4);
+    booksPerYearChart.onClick = function() {}; // prevent filtering (interferes with the page/year filter
     
     // rowchart for pages per year
     pagesPerYearChart.width(300)
