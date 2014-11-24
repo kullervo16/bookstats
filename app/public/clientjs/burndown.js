@@ -17,12 +17,20 @@ d3.json("/data/currentYear.json", function (data) {
     var timeDimension = facts.dimension(function (d) {
         return new Date(d.read);
     });
-    var pagesToRead = 10000;
+    var yearlyPagesToRead = 10000;
+    var pagesToRead = yearlyPagesToRead;
     var burndownPageSum = timeDimension.group().reduce(
         function (p, v) {            
             pagesToRead -= v.pages;
             p.toGo = pagesToRead;  
-            p.theory = 5000;
+            
+            // calculate the number of days between the start of the year
+            var currentDate = new Date(v.read);
+            var startOfYear = new Date("2014-01-01"); // TODO : config
+            var numDays = ((currentDate - startOfYear)/(1000*60*60*24));
+            var theoreticalPages = Math.floor(yearlyPagesToRead - (yearlyPagesToRead / 365 * numDays)); // TODO : leap year            
+            p.theory = theoreticalPages;
+            p.diff = theoreticalPages - pagesToRead;
             return p;
         },
         function (p, v) {            
@@ -51,12 +59,15 @@ d3.json("/data/currentYear.json", function (data) {
         .renderHorizontalGridLines(true)
         .legend(dc.legend().x(800).y(10).itemHeight(13).gap(5))
         .brushOn(false)
-        .group(burndownPageSum, "Pages to read")               
+        .group(burndownPageSum, "Pages read")               
         .valueAccessor(function (d) {                
             return d.value.toGo;
         })        
         .title(function (d) {  
-            return d.data.key.toString().substring(0,15) + ":\n Read :" + d.y;
+            return d.data.key.toString().substring(0,15)+ ":\n Theoretical pages to go : " + d.data.value.theory + "\n Actual pages to go : " + d.data.value.toGo;
+        })
+        .stack(burndownPageSum, "Theoretical", function (d) {
+            return d.value.diff;
         })
     ;
     
