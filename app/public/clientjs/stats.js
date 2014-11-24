@@ -14,7 +14,7 @@ var languageChart = dc.pieChart("#dc-language-chart");
 var ratingChart = dc.pieChart("#dc-rating-chart");
 
 
-// load data from a csv file
+// load data from a json url
 d3.json("/data/books.json", function (data) {
 // Run the data through crossfilter and load our 'facts'
 data.forEach(function(d) {

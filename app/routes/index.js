@@ -9,14 +9,22 @@
  * GET home page.
  */
 
-var stats = require ('./stats.js');
 var data = require('./data.js');
 'use strict';
 
 module.exports = function (app) {
-    app.get('/', stats.mainPage);
+    app.get('/', function (req, res) {
+        res.render('index', {
+            'pathToAssets': '/bootstrap-3.2.0',                        
+        });
+    }); 
     app.get('/about', function (req, res) {
         res.render('about', {
+            'pathToAssets': '/bootstrap-3.2.0',                        
+        });
+    });
+    app.get('/burndown', function (req, res) {
+        res.render('burndown', {
             'pathToAssets': '/bootstrap-3.2.0',                        
         });
     });

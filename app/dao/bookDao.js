@@ -28,9 +28,9 @@ function connect() {
 }
 
 /**
- * 
+ * Get the read books ordered by their data of completion
  */
-function listRecentBooks(max, res, callBack) {
+function listRecentBooks(res, callBack) {
     connect();
     
     var query = client.query("select b.title, b.genre, b.pages, b.read, b.link, a.name as author, b.language, b.rating from book b, author a where b.author = a.id and b.read is not null order by b.read desc");
@@ -42,6 +42,25 @@ function listRecentBooks(max, res, callBack) {
         callBack(res, result.rows);
     });
     
+}
+
+/**
+ * Get the books read this year.
+ * @param {type} res
+ * @param {type} callBack
+ * @returns {undefined}
+ */
+function listBooksForCurrentYear(res, callBack) {
+    connect();
+    
+    var query = client.query("select b.title, b.genre, b.pages, b.read, b.link, a.name as author, b.language, b.rating from book b, author a where b.author = a.id and read > date_trunc('year',now()) order by b.read asc");
+    
+    query.on("row", function (row, result) {
+        result.addRow(row);
+    });
+    query.on("end", function (result) {                         
+        callBack(res, result.rows);
+    });
 }
 
 function storeBook(title, author, read, pages, rating, language) {
@@ -93,3 +112,4 @@ function addBookForExistingAuthor(title, authorId, read, pages, rating, language
 
 exports.listRecentBooks = listRecentBooks;
 exports.storeBook = storeBook;
+exports.listBooksForCurrentYear = listBooksForCurrentYear;

@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-var dao = require('../dao/statsDao.js');
+var dao = require('../dao/bookDao.js');
 
 /**
  * Mainpage
@@ -13,8 +13,15 @@ var dao = require('../dao/statsDao.js');
  */
 function load(req, res, resource) {
     console.log("In data module : "+resource);
+    switch(resource) {
+        case 'books.json':
+            dao.listRecentBooks(res, renderData);
+            break;
+        case 'currentYear.json':
+            dao.listBooksForCurrentYear(res, renderData);
+            break;
+    }
     
-    dao.listRecentBooks(10, res, renderData);
     
 }
 
