@@ -1,3 +1,6 @@
-The OpenShift `nodejs` cartridge documentation can be found at:
+Bookstats
+====================
 
-http://openshift.github.io/documentation/oo_cartridge_guide.html#nodejs
+Application to render my book statistics via D3S. It is based on the Bootstrap 3 samples, is rendered using Jade, NodeJS, Express and Grunt and uses dc.js as rendering engine.
+
+

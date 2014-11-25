@@ -1,0 +1,92 @@
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="">
+        <meta name="author" content="">
+        <link rel="icon" href="/bootstrap-3.2.0/docs/favicon.ico">
+        <title>Theme Template for Bootstrap    </title>
+        <!-- D3 and DC.JS-->
+        <script src="clientjs/d3.v3.min.js"></script>
+        <script src="clientjs/crossfilter.v1.min.js"></script>
+        <script src="clientjs/dc.js"></script>
+        <!--script(src='http://cdnjs.cloudflare.com/ajax/libs/dc/1.7.0/dc.min.js')-->
+        <link href="css/dc.css" rel="stylesheet">
+        
+        <!-- Bootstrap core CSS-->
+        <link href="/bootstrap-3.2.0/dist/css/bootstrap.min.css" rel="stylesheet">
+        <!-- Bootstrap theme-->
+        <link href="/bootstrap-3.2.0/dist/css/bootstrap-theme.min.css" rel="stylesheet">
+        
+    </head>
+    <body role="document">
+        <!-- Fixed navbar-->
+        <div role="navigation" class="navbar navbar-inverse navbar-fixed-top">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" data-toggle="collapse" data-target=".navbar-collapse" class="navbar-toggle">
+                        <span class="sr-only">Toggle navigation</span><span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a href="#" class="navbar-brand">Bootstrap theme</a>
+                </div>
+                <div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                        <li class="active"><a href="#">Home</a></li>
+                        <li><a href="#about">About</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                        <li class="dropdown"><a href="#" data-toggle="dropdown" class="dropdown-toggle">Dropdown <span class="caret"></span></a>
+                            <ul role="menu" class="dropdown-menu">
+                                <li><a href="#">Action</a></li>
+                                <li><a href="#">Another action</a></li>
+                                <li><a href="#">Something else here</a></li>
+                                <li class="divider"></li>
+                                <li class="dropdown-header">Nav header</li>
+                                <li><a href="#">Separated link</a></li>
+                                <li><a href="#">One more separated link</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div><!-- /.nav-collapse-->
+            </div>
+        </div>
+        <div role="main" class="container theme-showcase">
+            <!-- Main jumbotron for a primary marketing message or call to action-->
+            <div class="jumbotron">
+                <h1>Jefs Book statistics</h1>
+            </div>
+            <div style="font: 12px sans-serif;" class="container">
+                <div class="row">
+                    <div class="span12">
+                        <table id="dc-table-graph" class="table table-hover">
+                            <thead>
+                                <tr class="header">
+                                    <th>Author</th>
+                                    <th>Title</th>
+                                    <th>Genre</th>
+                                    <th>Pages</th>
+                                    <th>Read</th>
+                                    <th>LibraryThing</th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /container-->
+        <!-- Bootstrap core JavaScript-->
+        <!-- ==================================================-->
+        <!-- Placed at the end of the document so the pages load faster-->
+        <script src="clientjs/jquery.min.js"></script>
+        <script src="/bootstrap-3.2.0/dist/js/bootstrap.min.js"></script>
+        <script src="/bootstrap-3.2.0/docs/assets/js/_vendor/holder.js"></script>
+        <!--|<script>sayHello('World');</script>-->
+        <!-- my stats page charts-->
+        <script src="clientjs/stats.js"></script>
+    </body>
+</html>

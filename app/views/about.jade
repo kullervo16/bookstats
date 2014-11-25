@@ -1,0 +1,48 @@
+doctype html
+html(lang='en')
+  include ./head.jade      
+      
+  body(role='document')
+    // Fixed navbar
+    .navbar.navbar-inverse.navbar-fixed-top(role='navigation')
+      .container
+        .navbar-header
+          button.navbar-toggle(type='button', data-toggle='collapse', data-target='.navbar-collapse')
+            span.sr-only Toggle navigation
+            span.icon-bar
+            span.icon-bar
+            span.icon-bar
+          //a.navbar-brand(href='#') Bootstrap theme
+        .navbar-collapse.collapse
+          ul.nav.navbar-nav
+            li
+              a(href='/') Home
+            li
+              a(href='burndown') Burndown
+            li.active
+              a(href='about') About
+            li
+              a(href='contact') Contact
+            
+        // /.nav-collapse
+    .container.theme-showcase(role='main')
+      // Main jumbotron for a primary marketing message or call to action
+      .jumbotron
+        h1 Jefs Book statistics
+        
+      h2
+        |History
+      p
+        |I keep track of my reading since the year 1996. As a software developer, I often wanted to try out a new technology, and my little book DB came in handy.
+      p
+        |So over the years, my books have been presented in C++,Python, Java (SE and EE), stored in SQLServer, MySQL, PostgreSQL, eXist...
+      p
+        |... until LibraryThing came along. So I switched over to LibraryThing, but over the time, I started missing my statistics (number of pages per year, predictions, per genre, per author, ...)
+      h2
+        |Current version
+      p
+        |And now again a nice new technology came along : node.js and D3S... So here it is again. And now available as showcase in the hope that the LibraryThing people start adding this feature into their site (or allow me to access all required data directly via my server).
+      p
+        |If you're interested, leave a message or fork the project on 
+        a(href='https://github.com/kullervo16/bookstats')
+            |github 
