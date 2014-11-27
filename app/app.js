@@ -3,9 +3,7 @@
  */
 'use strict';
 
-function startApplication() {
-    var PORT_LISTENER = 8080;
-    console.log('I am listening to this port: http://localhost:%s', PORT_LISTENER);
+function startApplication() {    
 
     var express = require('express'),
         http = require('http'),
@@ -16,7 +14,8 @@ function startApplication() {
     var app = express();
 
     // all environments
-    app.set('port', process.env.PORT || PORT_LISTENER);
+    app.set('port',  process.env.OPENSHIFT_NODEJS_PORT);
+    app.set('ip', process.env.OPENSHIFT_NODEJS_IP)
     app.set('views', __dirname + '/views');
     app.set('view engine', 'jade');
     app.use(express.favicon());
@@ -47,7 +46,7 @@ function startApplication() {
     }
 
 
-    http.createServer(app).listen(app.get('port'), function () {
+    http.createServer(app).listen(app.get('port'),app.get('ip'), function () {
         console.log('Express server listening on port ' + app.get('port'));
     });
 }
