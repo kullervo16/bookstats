@@ -17,7 +17,11 @@ function connect() {
     if(!connected) {
         var pg = require("pg");
 
-        var conString = "pg://bookstats:bookstats@localhost:5432/bookstats";
+        var user = process.env.OPENSHIFT_POSTGRESQL_DB_USERNAME;
+        var pwd  = process.env.OPENSHIFT_POSTGRESQL_DB_PASSWORD;
+        var ip   = process.env.OPENSHIFT_POSTGRESQL_DB_HOST;
+        var port = process.env.OPENSHIFT_POSTGRESQL_DB_PORT;
+        var conString = "pg://"+user+":"+pwd+"@"+ip+":"+port+"/bookstats";
 
         client = new pg.Client(conString);
         client.connect();
