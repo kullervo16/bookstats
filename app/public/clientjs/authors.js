@@ -6,9 +6,8 @@
 //var dataTable = dc.dataTable("#dc-table-graph");
 
             
-var pageChart = dc.barChart("#dc-page-chart");
-var pagesPerYearChart = dc.rowChart("#dc-pages-chart");
-var booksPerYearChart = dc.rowChart("#dc-books-chart");
+var pagesPerAuthorChart = dc.rowChart("#dc-pages-chart");
+var booksPerAuthorChart = dc.rowChart("#dc-books-chart");
 var genreChart = dc.pieChart("#dc-genre-chart");
 var languageChart = dc.pieChart("#dc-language-chart");
 var ratingChart = dc.pieChart("#dc-rating-chart");
@@ -29,23 +28,15 @@ data.forEach(function(d) {
     });
 var facts = crossfilter(data);
 // Create dataTable dimensions
-var timeDimension = facts.dimension(function (d) {
-return d.read;
+var authorDimension = facts.dimension(function (d) {
+return d.author;
 });
 
-var pageDimension = facts.dimension(function (d) {    
-    return d.pageCat;
-});
 
 var genreDimension = facts.dimension(function (d) {
     return d.genre;
 });
-var yearDimension = facts.dimension(function (d) {
-    if(d.read === null) {
-        return null;
-    }
-   return +d.read.substring(0,4);
-});
+
 var languageDimension = facts.dimension(function (d) {    
     return d.language;
 });
@@ -60,29 +51,26 @@ var dynatable = $('#dc-table-graph').dynatable({
         pushState: false
     },
     dataset: {
-        records: timeDimension.top(Infinity),
+        records: authorDimension.top(Infinity),
         perPageDefault: 10,
         perPageOptions: [10, 20, 50]
     }
 }).data('dynatable');
 function RefreshTable() {
     dc.events.trigger(function () {
-        dynatable.settings.dataset.originalRecords = timeDimension.top(Infinity);
+        dynatable.settings.dataset.originalRecords = authorDimension.top(Infinity);
         dynatable.process();
     });
 };
 
 // create group functions
-var pageValueGroupCount = pageDimension.group()
-.reduceCount(function(d) { return d.pageCat; });
-
-
-var yearValueGroupPageSum = yearDimension.group().reduceSum(function(d) {
+var authorValueGroupPageSum = authorDimension.group().reduceSum(function(d) {
     return +d.pages;
-});
-var yearValueGroupBookSum = yearDimension.group().reduceSum(function(d) {
+})
+var authorValueGroupBookSum = authorDimension.group().reduceSum(function(d) {
     return 1;
 });
+
 var genreGroupBookSum = genreDimension.group().reduceSum(function (d) {
     return 1;
 });
@@ -93,48 +81,46 @@ var ratingGroupBookSum = ratingDimension.group().reduceSum(function (d) {
     return 1;
 });
 
+
 // Setup the charts
 
-    
-    //barchart for pages per book
-    pageChart.width(480)
-    .height(150)
-    .margins({top: 10, right: 10, bottom: 20, left: 40})
-    .dimension(pageDimension)
-    .group(pageValueGroupCount)
-    .transitionDuration(500)    
-    .centerBar(true)
-    .gap(2)      
-    //.filter([3, 5])
-    .x(d3.scale.linear().domain([0, 2000]))        
-    .elasticY(true)              
-    //.xUnits(function () {console.log("XUNITS"); return dc.units.integers;});
-    ;
-    
-    pageChart.xUnitCount = function() {return +20;};
+    booksPerAuthorChart.othersGrouper(
+      function(data) {
+        return false;
+      }
+   );
+   pagesPerAuthorChart.othersGrouper(
+      function(data) {
+        return false;
+      }
+   );
     
     // rowchart for books per year
-    booksPerYearChart.width(300)
+    booksPerAuthorChart.width(300)
     .height(420)
     .margins({top: 5, left: 10, right: 10, bottom: 20})
-    .dimension(yearDimension)
-    .group(yearValueGroupBookSum)
+    .dimension(authorDimension)
+    .group(authorValueGroupBookSum)
     .colors(d3.scale.category20())
     .title(function(d){return d.value;})    
     .elasticX(true)
+    .cap(10)
     .xAxis().ticks(4);
-    booksPerYearChart.onClick = function() {}; // prevent filtering (interferes with the page/year filter
+    booksPerAuthorChart.onClick = function() {}; // prevent filtering (interferes with the page/year filter
     
     // rowchart for pages per year
-    pagesPerYearChart.width(300)
-    .height(420)
+    pagesPerAuthorChart.width(300)
+    .height(420)    
     .margins({top: 5, left: 10, right: 10, bottom: 20})
-    .dimension(yearDimension)
-    .group(yearValueGroupPageSum)
+    .dimension(authorDimension)
+    .group(authorValueGroupPageSum)
     .colors(d3.scale.category20())
     .title(function(d){return d.value;})
     .elasticX(true)
-    .xAxis().ticks(4);
+    .cap(10)    
+    .xAxis().ticks(4)    
+    ;
+    
     
     // pie chart per genre
     genreChart.width(180)

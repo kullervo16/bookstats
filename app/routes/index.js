@@ -28,6 +28,11 @@ module.exports = function (app) {
             'pathToAssets': '/bootstrap-3.2.0',                        
         });
     });
+    app.get('/authors', function (req, res) {
+        res.render('authors', {
+            'pathToAssets': '/bootstrap-3.2.0',                        
+        });
+    });
     app.get('/contact', function (req, res) {
         res.render('contact', {
             'pathToAssets': '/bootstrap-3.2.0',                        
