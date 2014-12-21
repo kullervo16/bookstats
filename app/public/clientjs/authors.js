@@ -14,12 +14,14 @@ var ratingChart = dc.pieChart("#dc-rating-chart");
 
 
 // load data from a json url
-d3.json("/data/books.json", function (data) {
+d3.json("/data/allBooks.json", function (data) {
 // Run the data through crossfilter and load our 'facts'
 data.forEach(function(d) {
     
         if(d.read !== null) {
             d.read = d.read.substr(0, 10);
+        } else {
+            d.read = '1990-01-01';
         }
         d.title = d.title;
         d.author = d.author;
@@ -84,6 +86,7 @@ var ratingGroupBookSum = ratingDimension.group().reduceSum(function (d) {
 
 // Setup the charts
 
+    // tell the charts we don't want an "others" section (unable to read the values since too small in that case)
     booksPerAuthorChart.othersGrouper(
       function(data) {
         return false;
@@ -104,6 +107,7 @@ var ratingGroupBookSum = ratingDimension.group().reduceSum(function (d) {
     .colors(d3.scale.category20())
     .title(function(d){return d.value;})    
     .elasticX(true)
+    .ordering( function(d) { return -1.0 * +d.value; }) // appears to work
     .cap(10)
     .xAxis().ticks(4);
     booksPerAuthorChart.onClick = function() {}; // prevent filtering (interferes with the page/year filter
@@ -117,7 +121,8 @@ var ratingGroupBookSum = ratingDimension.group().reduceSum(function (d) {
     .colors(d3.scale.category20())
     .title(function(d){return d.value;})
     .elasticX(true)
-    .cap(10)    
+    .ordering( function(d) { return -1.0 * +d.value; }) // appears to work
+    .cap(10)        
     .xAxis().ticks(4)    
     ;
     

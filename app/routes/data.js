@@ -17,6 +17,9 @@ function load(req, res, resource) {
         case 'books.json':
             dao.listRecentBooks(res, renderData);
             break;
+        case 'allBooks.json':
+            dao.listAllBooks(res, renderData);
+            break;
         case 'currentYear.json':
             dao.listBooksForCurrentYear(res, renderData);
             break;

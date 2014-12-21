@@ -37,7 +37,24 @@ function connect() {
 function listRecentBooks(res, callBack) {
     connect();
     
-    var query = client.query("select b.title, b.genre, b.pages, b.read, b.link, a.name as author, b.language, b.rating from book b, author a where b.author = a.id and b.read is not null order by b.read desc");
+    var query = client.query("select b.title, b.genre, b.pages, b.read, b.link, a.name ||', '||a.firstName as author, b.language, b.rating from book b, author a where b.author = a.id and b.read is not null order by b.read desc");
+    
+    query.on("row", function (row, result) {
+        result.addRow(row);
+    });
+    query.on("end", function (result) {                         
+        callBack(res, result.rows);
+    });
+    
+}
+
+/**
+ * Get the read books ordered by their data of completion
+ */
+function listAllBooks(res, callBack) {
+    connect();
+    
+    var query = client.query("select b.title, b.genre, b.pages, b.read, b.link, a.name ||', '||a.firstName as author, b.language, b.rating from book b, author a where b.author = a.id order by b.read desc");
     
     query.on("row", function (row, result) {
         result.addRow(row);
@@ -115,5 +132,6 @@ function addBookForExistingAuthor(title, authorId, read, pages, rating, language
 }
 
 exports.listRecentBooks = listRecentBooks;
+exports.listAllBooks = listAllBooks;
 exports.storeBook = storeBook;
 exports.listBooksForCurrentYear = listBooksForCurrentYear;
