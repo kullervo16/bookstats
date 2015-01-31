@@ -26,6 +26,9 @@ function load(req, res, resource) {
         case 'unread.json':
             dao.listUnreadBooks(res, renderData);
             break;
+        case 'genres.json':
+            dao.listGenres(res, renderData);
+            break;
     }
     
     

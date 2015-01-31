@@ -145,8 +145,23 @@ function listUnreadBooks(res, callBack) {
     
 }
 
+function listGenres(res, callBack) {
+    connect();
+    
+    var query = client.query("select * from genre");
+    
+    query.on("row", function (row, result) {
+        result.addRow(row);
+    });
+    query.on("end", function (result) {                         
+        callBack(res, result.rows);
+    });
+    
+}
+
 exports.listRecentBooks = listRecentBooks;
 exports.listAllBooks = listAllBooks;
 exports.storeBook = storeBook;
 exports.listBooksForCurrentYear = listBooksForCurrentYear;
 exports.listUnreadBooks = listUnreadBooks;
+exports.listGenres = listGenres;

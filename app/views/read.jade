@@ -47,6 +47,9 @@ html(lang='en')
             p
                 input(type="date", placeholder="dateRead", ng-model="dateRead",title="Date read")
             p
+                select(ng-model="genre")
+                    option(ng-repeat="genre in genres", value="{{genre.name}}"){{genre.name}}  
+            p
                 button.btn(ng-click="update()",title="Update") Update
                 
               
