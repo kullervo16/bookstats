@@ -3,15 +3,21 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/home/jef/NetBeansProjects/bootstrap/bookstats/app/views/authors.jade</file>
             <file>file:/home/jef/NetBeansProjects/bootstrap/bookstats/app/app.js</file>
-            <file>file:/home/jef/NetBeansProjects/bootstrap/bookstats/app/dao/bookDao.js</file>
+            <file>file:/home/jef/NetBeansProjects/bootstrap/bookstats/README.md</file>
+            <file>file:/home/jef/NetBeansProjects/bootstrap/bookstats/app/public/clientjs/burndown.js</file>
             <file>file:/home/jef/NetBeansProjects/bootstrap/bookstats/app/views/about.jade</file>
-            <file>file:/home/jef/NetBeansProjects/bootstrap/bookstats/app/views/contact.jade</file>
             <file>file:/home/jef/NetBeansProjects/bootstrap/bookstats/app/public/clientjs/authors.js</file>
+            <file>file:/home/jef/NetBeansProjects/bootstrap/bookstats/app/routes/data.js</file>
+            <file>file:/home/jef/NetBeansProjects/bootstrap/bookstats/app/views/head.jade</file>
+            <file>file:/home/jef/NetBeansProjects/bootstrap/bookstats/app/views/index.jade</file>
+            <file>file:/home/jef/NetBeansProjects/bootstrap/bookstats/app/public/clientjs/dc.js</file>
+            <file>file:/home/jef/NetBeansProjects/bootstrap/bookstats/app/dao/bookDao.js</file>
+            <file>file:/home/jef/NetBeansProjects/bootstrap/bookstats/app/views/authors.jade</file>
+            <file>file:/home/jef/NetBeansProjects/bootstrap/bookstats/app/views/contact.jade</file>
+            <file>file:/home/jef/NetBeansProjects/bootstrap/bookstats/LICENSE-MIT</file>
             <file>file:/home/jef/NetBeansProjects/bootstrap/bookstats/app/public/clientjs/stats.js</file>
             <file>file:/home/jef/NetBeansProjects/bootstrap/bookstats/app/routes/index.js</file>
-            <file>file:/home/jef/NetBeansProjects/bootstrap/bookstats/app/views/index.jade</file>
             <file>file:/home/jef/NetBeansProjects/bootstrap/bookstats/app/views/burndown.jade</file>
         </group>
     </open-files>

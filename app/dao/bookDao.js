@@ -131,7 +131,22 @@ function addBookForExistingAuthor(title, authorId, read, pages, rating, language
     bookId = bookId+1;    
 }
 
+function listUnreadBooks(res, callBack) {
+    connect();
+    
+    var query = client.query("select b.id,b.title from book b where b.to_read = true order by b.title");
+    
+    query.on("row", function (row, result) {
+        result.addRow(row);
+    });
+    query.on("end", function (result) {                         
+        callBack(res, result.rows);
+    });
+    
+}
+
 exports.listRecentBooks = listRecentBooks;
 exports.listAllBooks = listAllBooks;
 exports.storeBook = storeBook;
 exports.listBooksForCurrentYear = listBooksForCurrentYear;
+exports.listUnreadBooks = listUnreadBooks;

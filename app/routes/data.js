@@ -23,6 +23,9 @@ function load(req, res, resource) {
         case 'currentYear.json':
             dao.listBooksForCurrentYear(res, renderData);
             break;
+        case 'unread.json':
+            dao.listUnreadBooks(res, renderData);
+            break;
     }
     
     

@@ -33,6 +33,11 @@ module.exports = function (app) {
             'pathToAssets': '/bootstrap-3.2.0',                        
         });
     });
+    app.get('/read', function (req, res) {
+        res.render('read', {
+            'pathToAssets': '/bootstrap-3.2.0',                        
+        });
+    });
     app.get('/contact', function (req, res) {
         res.render('contact', {
             'pathToAssets': '/bootstrap-3.2.0',                        
