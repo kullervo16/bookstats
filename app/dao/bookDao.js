@@ -159,9 +159,21 @@ function listGenres(res, callBack) {
     
 }
 
+function updateRead(id, date, rating, genre) {
+    console.log("ID = "+id);
+    console.log("Date = "+date);
+    console.log("Rating = "+rating);
+    console.log("Genre = "+genre);
+    
+    connect();
+    
+    var query = client.query("update book set genre = '"+genre+"',rating='"+rating+"',read='"+date+"', to_read = false where id = "+id);
+}
+
 exports.listRecentBooks = listRecentBooks;
 exports.listAllBooks = listAllBooks;
 exports.storeBook = storeBook;
 exports.listBooksForCurrentYear = listBooksForCurrentYear;
 exports.listUnreadBooks = listUnreadBooks;
 exports.listGenres = listGenres;
+exports.updateRead = updateRead;

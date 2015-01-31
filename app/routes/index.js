@@ -10,6 +10,7 @@
  */
 
 var data = require('./data.js');
+var update = require('./update.js');
 'use strict';
 
 module.exports = function (app) {
@@ -51,6 +52,9 @@ module.exports = function (app) {
     });
     app.get('/data/:resource', function (req, res) {
         data.load(req,res,req.params.resource);
+    });
+    app.post('/update/:resource', function (req, res) {
+        update.handle(req,res,req.params.resource);
     });
     
 };

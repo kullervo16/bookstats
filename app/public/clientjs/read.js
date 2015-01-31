@@ -28,9 +28,9 @@ function readController($scope,$http) {
                          "rating":$scope.rating
                      };
         $http.post('update/read',update).success(function (data,status,headers,config) {
-                            console.log('Update successful');
+                            alert('Update successful');
                         }).error(function (data,status,headers,config) {
-                            console.log('Error posting');
+                            alert('Error posting');
                         });  
     }
 }
