@@ -56,5 +56,10 @@ module.exports = function (app) {
     app.post('/update/:resource', function (req, res) {
         update.handle(req,res,req.params.resource);
     });
+    app.get('/add', function (req, res) {
+        res.render('add', {
+            'pathToAssets': '/bootstrap-3.2.0',                        
+        });
+    });
     
 };

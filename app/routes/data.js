@@ -29,6 +29,9 @@ function load(req, res, resource) {
         case 'genres.json':
             dao.listGenres(res, renderData);
             break;
+        case 'authors.json' :
+            dao.listAuthors(res,renderData);
+            break;
     }
     
     

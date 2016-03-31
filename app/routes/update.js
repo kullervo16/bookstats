@@ -21,6 +21,13 @@ function handle(req, res, resource) {
             res.write("OK");
             res.end("\n");
             break;
+        case 'addBook':
+            console.log("Add "+Object.keys(req.body));
+            dao.updateAdd(req.body.authorId, req.body.date,req.body.rating,req.body.genre,req.body.title,req.body.pages,req.body.language);
+            res.writeHead(200, {'Content-Type': 'text/plain'});
+            res.write("OK");
+            res.end("\n");
+            break;
         
     }
     

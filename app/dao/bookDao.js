@@ -159,6 +159,20 @@ function listGenres(res, callBack) {
     
 }
 
+function listAuthors(res, callBack) {
+    connect();
+    
+    var query = client.query("select * from author order by name");
+    
+    query.on("row", function (row, result) {
+        result.addRow(row);
+    });
+    query.on("end", function (result) {                         
+        callBack(res, result.rows);
+    });
+    
+}
+
 function updateRead(id, date, rating, genre) {
     console.log("ID = "+id);
     console.log("Date = "+date);
@@ -170,6 +184,20 @@ function updateRead(id, date, rating, genre) {
     var query = client.query("update book set genre = '"+genre+"',rating='"+rating+"',read='"+date+"', to_read = false where id = "+id);
 }
 
+function updateAdd(id, date, rating, genre, title, pages, language) {
+    console.log("authorId = "+id);
+    console.log("Date = "+date);
+    console.log("Rating = "+rating);
+    console.log("Genre = "+genre);
+    console.log("Title = "+title);
+    console.log("Pages = "+pages);
+    console.log("Language = "+language);
+    
+    connect();
+    
+    var query = client.query("insert into book select max(id)+1,'"+title+"','"+genre+"',"+pages+",'"+date+"',null,"+id+",'"+language+"','"+rating+"',false from book");
+}
+
 exports.listRecentBooks = listRecentBooks;
 exports.listAllBooks = listAllBooks;
 exports.storeBook = storeBook;
@@ -177,3 +205,5 @@ exports.listBooksForCurrentYear = listBooksForCurrentYear;
 exports.listUnreadBooks = listUnreadBooks;
 exports.listGenres = listGenres;
 exports.updateRead = updateRead;
+exports.listAuthors= listAuthors;
+exports.updateAdd  = updateAdd;
