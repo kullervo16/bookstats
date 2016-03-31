@@ -14,8 +14,8 @@ function startApplication() {
     var app = express();
 
     // all environments
-    app.set('port',  process.env.OPENSHIFT_NODEJS_PORT);
-    app.set('ip', process.env.OPENSHIFT_NODEJS_IP)
+    app.set('port',  process.env.OPENSHIFT_PORT);
+    app.set('ip', process.env.OPENSHIFT_IP)
     app.set('views', __dirname + '/views');
     app.set('view engine', 'jade');
     app.use(express.favicon());

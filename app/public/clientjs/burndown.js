@@ -26,9 +26,9 @@ d3.json("/data/currentYear.json", function (data) {
             
             // calculate the number of days between the start of the year
             var currentDate = new Date(v.read);
-            var startOfYear = new Date("2015-01-01"); // TODO : config
+            var startOfYear = new Date("2016-01-01"); // TODO : config
             var numDays = ((currentDate - startOfYear)/(1000*60*60*24));
-            var theoreticalPages = Math.floor(yearlyPagesToRead - (yearlyPagesToRead / 365 * numDays)); // TODO : leap year            
+            var theoreticalPages = Math.floor(yearlyPagesToRead - (yearlyPagesToRead / 366 * numDays)); // TODO : leap year            
             p.theory = theoreticalPages;
             p.diff = theoreticalPages - pagesToRead;
             return p;
@@ -52,7 +52,7 @@ d3.json("/data/currentYear.json", function (data) {
         .dimension(timeDimension)
         //.mouseZoomable(true)
         //.rangeChart(volumeChart)
-        .x(d3.time.scale().domain([new Date(2015, 0, 1), new Date(2015, 12, 31)])) // TODO : make dynamic
+        .x(d3.time.scale().domain([new Date(2016, 0, 1), new Date(2016, 12, 31)])) // TODO : make dynamic
         //.round(d3.time.month.round)
         //.xUnits(d3.time.months)
         .elasticY(true)
