@@ -198,6 +198,15 @@ function updateAdd(id, date, rating, genre, title, pages, language) {
     var query = client.query("insert into book select max(id)+1,'"+title+"','"+genre+"',"+pages+",'"+date+"',null,"+id+",'"+language+"','"+rating+"',false from book");
 }
 
+function updateAddAuthor(firstName, name) {
+    console.log("firstName = "+firstName);
+    console.log("name = "+name);    
+    
+    connect();
+    
+    var query = client.query("insert into author select max(id)+1,'"+name+"','"+firstName+"' from author");
+}
+
 exports.listRecentBooks = listRecentBooks;
 exports.listAllBooks = listAllBooks;
 exports.storeBook = storeBook;
@@ -207,3 +216,4 @@ exports.listGenres = listGenres;
 exports.updateRead = updateRead;
 exports.listAuthors= listAuthors;
 exports.updateAdd  = updateAdd;
+exports.updateAddAuthor = updateAddAuthor;

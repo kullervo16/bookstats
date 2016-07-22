@@ -1,9 +1,9 @@
 doctype html
 html(lang='en')
-  include ./head.jade      
-    
+  include ./head.jade   
+  script(src='clientjs/addAuthor.js')  
       
-  body(role='document')
+  body(role='document',ng-app="addAuthor")
     // Fixed navbar
     .navbar.navbar-inverse.navbar-fixed-top(role='navigation')
       .container
@@ -24,29 +24,36 @@ html(lang='en')
               a(href='authors') Authors
             li
               a(href='about') About
-            li.active
+            li
               a(href='contact') Contact
             li
               a(href='read') Set read
             li
               a(href='add') Add book
-            li
-              a(href='addAuthor') Add author              
+            li.active
+              a(href='addAuthor') Add author
             
         // /.nav-collapse
     .container.theme-showcase(role='main')
       // Main jumbotron for a primary marketing message or call to action
       .jumbotron
         h1 Jefs Book statistics
-        
       h2
-        |Get in touch
-      p
-        |You can find me in  
-        a(href='https://www.librarything.com/profile/kullervo16')
-            |LibraryThing
-        |... feel free to send me a message to comment on this.
-      p
-        |You can also leave a message or fork the project on 
-        a(href='https://github.com/kullervo16/bookstats')
-            |github 
+        |Add a new author
+      div(ng-controller="addController")                              
+            p
+                input(type="text", placeholder="firstName", ng-model="firstName",title="firstName")                            
+            p
+                input(type="text", placeholder="name", ng-model="name",title="name")                   
+            p
+                button.btn(ng-click="update()",title="Update") Update
+                
+              
+    // /container
+    
+    // Bootstrap core JavaScript
+    // ==================================================
+    // Placed at the end of the document so the pages load faster
+    
+    script(src='#{pathToAssets}/docs/assets/js/_vendor/holder.js')
+    

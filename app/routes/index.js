@@ -61,5 +61,10 @@ module.exports = function (app) {
             'pathToAssets': '/bootstrap-3.2.0',                        
         });
     });
+    app.get('/addAuthor', function (req, res) {
+        res.render('addAuthor', {
+            'pathToAssets': '/bootstrap-3.2.0',                        
+        });
+    });
     
 };

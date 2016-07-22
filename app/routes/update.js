@@ -28,6 +28,13 @@ function handle(req, res, resource) {
             res.write("OK");
             res.end("\n");
             break;
+        case 'addAuthor':
+            console.log("Add "+Object.keys(req.body));
+            dao.updateAddAuthor(req.body.firstName, req.body.name);
+            res.writeHead(200, {'Content-Type': 'text/plain'});
+            res.write("OK");
+            res.end("\n");
+            break;
         
     }
     
