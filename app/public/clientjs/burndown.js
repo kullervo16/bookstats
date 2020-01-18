@@ -3,6 +3,13 @@ var burndownChart = dc.lineChart("#dc-burndown-chart");
 // load data from a json url
 d3.json("/data/currentYear.json", function (data) {
     // Run the data through crossfilter and load our 'facts'
+    var currentYear = new Date().getFullYear();
+    var startPos = {};
+    startPos.pages = 0;
+    startPos.read = currentYear+'-01-01';
+    startPos.title = 'startPos';
+    startPos.author = 'start';
+    data.splice(0,0,startPos);
     data.forEach(function(d) {
 
         if (d.read !== null) {
@@ -20,29 +27,29 @@ d3.json("/data/currentYear.json", function (data) {
     var yearlyPagesToRead = 10000;
     var pagesToRead = yearlyPagesToRead;
     var burndownPageSum = timeDimension.group().reduce(
-        function (p, v) {            
+        function (p, v) {
             pagesToRead -= v.pages;
             p.toGo = pagesToRead;  
-            
+
             // calculate the number of days between the start of the year
             var currentDate = new Date(v.read);
-            var startOfYear = new Date("2016-01-01"); // TODO : config
+            var startOfYear = new Date(currentYear+"-01-01");
             var numDays = ((currentDate - startOfYear)/(1000*60*60*24));
-            var theoreticalPages = Math.floor(yearlyPagesToRead - (yearlyPagesToRead / 366 * numDays)); // TODO : leap year            
+            var theoreticalPages = Math.floor(yearlyPagesToRead - (yearlyPagesToRead / 365 * numDays));
             p.theory = theoreticalPages;
             p.diff = theoreticalPages - pagesToRead;
             return p;
         },
-        function (p, v) {            
+        function (p, v) {
             return p;
         },
-        function (p,v) {            
+        function (p,v) {
             return {toGo: pagesToRead, theory: 5000};
         }
     );
     var test = timeDimension.group().reduceSum(function(d) { return d.pages; })
 
-    
+
     burndownChart
         .renderArea(true)
         .width(990)
@@ -52,27 +59,27 @@ d3.json("/data/currentYear.json", function (data) {
         .dimension(timeDimension)
         //.mouseZoomable(true)
         //.rangeChart(volumeChart)
-        .x(d3.time.scale().domain([new Date(2016, 0, 1), new Date(2016, 12, 31)])) // TODO : make dynamic
+        .x(d3.time.scale().domain([new Date(currentYear, 0, 1), new Date(currentYear, 12, 31)]))
         //.round(d3.time.month.round)
         //.xUnits(d3.time.months)
         .elasticY(true)
         .renderHorizontalGridLines(true)
         .legend(dc.legend().x(800).y(10).itemHeight(13).gap(5))
         .brushOn(false)
-        .group(burndownPageSum, "Pages read")               
-        .valueAccessor(function (d) {                
+        .group(burndownPageSum, "Pages read")
+        .valueAccessor(function (d) {
             return d.value.toGo;
-        })        
-        .title(function (d) {  
+        })
+        .title(function (d) {
             return d.data.key.toString().substring(0,15)+ ":\n Theoretical pages to go : " + d.data.value.theory + "\n Actual pages to go : " + d.data.value.toGo;
         })
         .stack(burndownPageSum, "Theoretical", function (d) {
             return d.value.diff;
         })
     ;
-    
+
     //burndownChart.yAxisMin = function() {return -200;};
     //burndownChart.yAxisMax = function() {return +10000;};
-    
+
     dc.renderAll();
 });
