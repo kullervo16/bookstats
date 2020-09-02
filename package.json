@@ -8,7 +8,7 @@
     "express": "~3.2.6",
     "grunt": "~0.4.1",
     "jade": "~0.34.1",
-    "googleapis": "~0.4.3",
+    "googleapis": "~59.0.0",
     "matchdep": "~0.1.2",
     "pg":"~4.0.0"
   },
