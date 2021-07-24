@@ -198,13 +198,20 @@ function updateAdd(id, date, rating, genre, title, pages, language) {
     var query = client.query("insert into book select max(id)+1,'"+title+"','"+genre+"',"+pages+",'"+date+"',null,"+id+",'"+language+"','"+rating+"',false from book");
 }
 
-function updateAddAuthor(firstName, name) {
+function updateAddAuthor(firstName, name, callBack) {
     console.log("firstName = "+firstName);
     console.log("name = "+name);    
     
     connect();
     
-    var query = client.query("insert into author select max(id)+1,'"+name+"','"+firstName+"' from author");
+    client.query("insert into author select max(id)+1,'"+name+"','"+firstName+"' from author");
+    var query = client.query("select max(id) as maxId from author");
+    query.on("row", function (row, result) {
+        result.addRow(row);
+    });
+    query.on("end", function (result) {
+        callBack(result.rows);
+    });
 }
 
 exports.listRecentBooks = listRecentBooks;

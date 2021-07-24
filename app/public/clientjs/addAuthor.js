@@ -11,6 +11,7 @@ function addController($scope,$http) {
                      };
         $http.post('update/addAuthor',update).success(function (data,status,headers,config) {
                             alert('Update successful');
+                            window.location.assign("./add?author="+data[0]);
                         }).error(function (data,status,headers,config) {
                             alert('Error posting');
                         });  

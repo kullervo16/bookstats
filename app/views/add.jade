@@ -43,12 +43,12 @@ html(lang='en')
       div(ng-controller="addController")
             p
                 select(ng-model="author")
-                    option(ng-repeat="author in authors", value="{{author.id}}") {{author.name}},{{author.firstname}}     
+                    option(ng-repeat="author in authors", ng-selected="isSelected({{author.id}})", value="{{author.id}}") {{author.name}},{{author.firstname}}
             p
                 input(type="text", placeholder="title", ng-model="title",title="Title")                
             p
                 select(ng-model="genre")
-                    option(ng-repeat="genre in genres", value="{{genre.name}}"){{genre.name}}  
+                    option(ng-repeat="genre in genres", value="{{genre.name}}") {{genre.name}}
             p
                 input(type="text", placeholder="pages", ng-model="pages",title="Pages")
             p

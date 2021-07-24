@@ -36,6 +36,16 @@ function addController($scope,$http) {
                             alert('Error posting');
                         });  
     }
+
+    $scope.isSelected = function(authorId) {
+        if(location.search.indexOf("author") < 0) {
+            return false;
+        }
+        let selectedAuthor = location.search.split("=")[1];
+        $scope.author = selectedAuthor;
+        return authorId == selectedAuthor;
+    }
+
 }
 
 
