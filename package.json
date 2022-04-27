@@ -6,7 +6,7 @@
   "repository": "git",
   "dependencies": {
     "express": "~3.2.6",
-    "grunt": "~0.4.1",
+    "grunt": "~1.5.2",
     "jade": "~0.34.1",
     "googleapis": "~0.4.3",
     "matchdep": "~0.1.2",
